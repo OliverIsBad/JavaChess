@@ -10,6 +10,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatDarculaLaf;
 
+import Model.ChessBoard;
+
 public class App { 
     public static void main(String[] args) throws Exception {
         // Apply FlatLaf look and feel
@@ -23,23 +25,13 @@ public class App {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Java Chess");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 200);
+            frame.setSize(480, 480);
 
-            JPanel panel = new JPanel();
-            JLabel label = new JLabel("Hello World!");
-            panel.add(label);
+            ChessBoard board = new ChessBoard();
+            ChessBoardView boardView = new ChessBoardView(board);
+            frame.add(boardView);
 
-            JButton button = new JButton("Click Me");
-            panel.add(button);
-
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    label.setText("Button Clicked");
-                }
-            });
-
-            frame.add(panel);
+            //frame.pack();
             frame.setVisible(true);
         });
     }
