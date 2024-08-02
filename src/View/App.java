@@ -31,7 +31,7 @@ public class App {
             ChessBoardView boardView = new ChessBoardView(board);
             frame.add(boardView);
 
-            //frame.pack();
+            frame.pack();
             frame.setVisible(true);
         });
     }

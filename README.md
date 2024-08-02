@@ -11,6 +11,7 @@ Represents the game's data and business logic (e.g., the chessboard, pieces, and
 Represents the UI components that display the game state to the player (e.g., the chessboard GUI).
 ### Controller:
 Handles user input and updates the model and view accordingly.
+
 ## 2. Observer
 The Observer pattern is useful for handling the updates between the model and the view. When the game state changes (e.g., a piece moves), observers (views) are notified to update their display.
 
