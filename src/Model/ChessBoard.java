@@ -34,12 +34,12 @@ public class ChessBoard {
         board[5][7] = new ChessPiece("bishop", "black");
 
         // Set up queens
-        board[3][0] = new ChessPiece("queen", "white");
-        board[3][7] = new ChessPiece("queen", "black");
+        board[4][0] = new ChessPiece("queen", "white");
+        board[4][7] = new ChessPiece("queen", "black");
 
         // Set up kings
-        board[4][0] = new ChessPiece("king", "white");
-        board[4][7] = new ChessPiece("king", "black");
+        board[3][0] = new ChessPiece("king", "white");
+        board[3][7] = new ChessPiece("king", "black");
     }
 
     public ChessPiece getPieceAt(int x, int y) {
@@ -47,8 +47,22 @@ public class ChessBoard {
     }
 
     public void movePiece(int fromX, int fromY, int toX, int toY) {
-        // Move Logic
+        if (isLegalMove(fromX, fromY, toX, toY)) {
+            board[toX][toY] = board[fromX][fromY];
+            board[fromX][fromY] = null;
+        }
     }
 
-    // Additional methods for board logic
+    public boolean isLegalMove(int fromX, int fromY, int toX, int toY) {
+        ChessPiece piece = board[fromX][fromY];
+        if (piece == null) return false;
+
+        // Check if the move is in the list of legal moves for the piece
+        for (int[] move : piece.getLegalMoves(fromX, fromY, this)) {
+            if (move[0] == toX && move[1] == toY) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

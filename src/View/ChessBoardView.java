@@ -15,6 +15,8 @@ public class ChessBoardView extends JPanel {
     private static final int TILE_SIZE = 60;
     private ChessBoard board;
     private Map<String, Image> pieceImages;
+    private int selectedX = -1;
+    private int selectedY = -1;
 
     public ChessBoardView(ChessBoard board) {
         this.board = board;
@@ -30,7 +32,7 @@ public class ChessBoardView extends JPanel {
                 int x = e.getX() / TILE_SIZE;
                 int y = e.getY() / TILE_SIZE;
 
-                handleSquareClick(x,y);
+                handleSquareClick(x, y);
             }
         });
     }
@@ -41,7 +43,7 @@ public class ChessBoardView extends JPanel {
      * and the value being the image of the piece
      * @author https://github.com/OliverIsBad
      */
-    private Map<String,Image> loadPieceImages() {
+    private Map<String, Image> loadPieceImages() {
         Map<String, Image> images = new HashMap<>();
         String[] pieceNames = {"pawn", "rook", "knight", "bishop", "queen", "king"};
         String[] colors = {"white", "black"};
@@ -67,7 +69,20 @@ public class ChessBoardView extends JPanel {
      * @author https://github.com/OliverIsBad
      */
     public void handleSquareClick(int x, int y) {
-        System.out.println("Square Clicked: " + x + " , " + y);
+        if (selectedX == -1 && selectedY == -1) {
+            // No piece is selected yet
+            if (board.getPieceAt(x, y) != null) {
+                selectedX = x;
+                selectedY = y;
+                System.out.println("Piece selected at: " + x + " , " + y);
+            }
+        } else {
+            // Move the selected piece to the new square
+            board.movePiece(selectedX, selectedY, x, y);
+            selectedX = -1;
+            selectedY = -1;
+            repaint();
+        }
     }
 
     @Override
@@ -84,6 +99,13 @@ public class ChessBoardView extends JPanel {
                     drawPiece(g, piece, col * TILE_SIZE, row * TILE_SIZE); // if a piece is present call drawPiece
                 }
             }
+        }
+
+        // Highlight the selected square
+        if (selectedX != -1 && selectedY != -1) {
+            g.setColor(Color.RED);
+            g.drawRect(selectedX * TILE_SIZE, selectedY * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            g.drawRect(selectedX * TILE_SIZE + 1, selectedY * TILE_SIZE + 1, TILE_SIZE - 2, TILE_SIZE - 2);
         }
     }
 

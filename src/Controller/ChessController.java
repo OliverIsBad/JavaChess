@@ -15,7 +15,7 @@ public class ChessController {
 
     public void handleMove(int fromX, int fromY,int toX, int toY) {
         board.movePiece(fromX, fromY, toX, toY);
-        //view.updateView();
+        
     }
 
 }
